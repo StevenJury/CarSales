@@ -114,3 +114,50 @@ ORDER BY AvgMMR asc
 ![image](https://github.com/user-attachments/assets/98ee4cbf-e8fa-446b-af87-b54ffc7dbb04)
 
 Looks like that worked. 
+
+
+Now lets add together car models so we can see our average prices per car models with the milage bucket
+```
+SELECT 
+  CASE
+    WHEN odometer > 100000 THEN 'Above100k'
+    WHEN odometer BETWEEN 80000 AND 100000 THEN '80to100K'
+    WHEN odometer BETWEEN 50000 AND 79999 THEN '50to79K'
+    WHEN odometer BETWEEN 30000 AND 49999 THEN '30to49K'
+    WHEN odometer BETWEEN 10000 AND 29999 THEN '10to29K'
+    ELSE 'Under10K'
+  END AS Mileage,
+AVG(CAST(mmr AS FLOAT)) AS AvgMMR,
+make
+FROM dbo.carsalesnew
+GROUP BY 
+  CASE
+    WHEN odometer > 100000 THEN 'Above100k'
+    WHEN odometer BETWEEN 80000 AND 100000 THEN '80to100K'
+    WHEN odometer BETWEEN 50000 AND 79999 THEN '50to79K'
+    WHEN odometer BETWEEN 30000 AND 49999 THEN '30to49K'
+    WHEN odometer BETWEEN 10000 AND 29999 THEN '10to29K'
+    ELSE 'Under10K'
+  END,
+ make
+ORDER BY AvgMMR asc
+```
+![image](https://github.com/user-attachments/assets/dce8ee6b-a37c-4b01-be44-a404120ad255)
+
+
+
+From here we can mess around with using WHERE statements to get some more in depth detail on specific makes
+
+![image](https://github.com/user-attachments/assets/20ec4b08-ba74-42db-9abf-f716a098d927)
+
+Now I want to know how many cars are being sold under market value. This is an easy query, we just need to find out what cars have a higher selling price than MMR and then we can group by our model. 
+
+```
+select count(*) as totalcars, model from dbo.carsalesnew
+WHERE mmr > sellingprice
+GROUP BY model
+ORDER BY count(*) desc
+```
+
+![image](https://github.com/user-attachments/assets/813e202e-85d1-4a35-9774-db655280b0dd)
+
