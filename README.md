@@ -161,3 +161,20 @@ ORDER BY count(*) desc
 
 ![image](https://github.com/user-attachments/assets/813e202e-85d1-4a35-9774-db655280b0dd)
 
+
+Lets put it together in Tableau to show the top selling brand by state using the RANK function 
+
+https://public.tableau.com/app/profile/steven.jury/viz/Cardata_17459492172650/CarSales#1
+
+![image](https://github.com/user-attachments/assets/ee87910f-2858-451f-806f-64b41d57943d)
+
+I also made sure to rerun some queries like 
+```
+select SUM(sellingprice), make  from dbo.carsalesnew
+WHERE state = 'NM'
+GROUP BY Make
+ORDER BY sum(sellingprice) desc
+```
+In order to make sure Tableau was calculating correctly.
+
+
