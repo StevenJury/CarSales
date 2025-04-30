@@ -178,3 +178,8 @@ ORDER BY sum(sellingprice) desc
 In order to make sure Tableau was calculating correctly.
 
 
+Lets also do a quick tableau wiz to show the average selling price per body type
+
+![image](https://github.com/user-attachments/assets/3797da86-6a9c-4389-94a2-fd2055a12b27)
+
+
